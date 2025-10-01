@@ -18,7 +18,7 @@ It provides a simple and flexible interface for developers, students, and hardwa
 Clone this repository and install required dependencies:
 
 ```bash
-git clone https://github.com/your-username/fram-module-controller.git
-cd fram-module-controller
+git clone https://github.com/Bleee411/FMC_Fram-Module_Controler.git
+cd FMC_Fram-Module_Controler
 pip install -r requirements.txt
 ```
