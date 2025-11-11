@@ -9,6 +9,7 @@ from PyQt6.QtWidgets import (QApplication, QMainWindow, QVBoxLayout, QHBoxLayout
                            QInputDialog, QFileDialog)
 from PyQt6.QtCore import Qt, QTimer, QThread, pyqtSignal
 from PyQt6.QtGui import QFont, QColor, QPalette, QTextCursor, QIcon, QTextCharFormat
+import re # Dodano import do wyrażeń regularnych
 
 class ModeSelectionDialog(QDialog):
     def __init__(self, parent=None):
@@ -168,16 +169,20 @@ class TerminalWidget(QTextEdit):
         super().keyPressEvent(event)
     
     def clean_command(self, raw_text):
-        
-        import re
-        cleaned = raw_text 
-        cleaned = re.sub(r'[\u0000-\u001F\u007F-\u009F\u2000-\u20FF\u2600-\u26FF\u2700-\u27BF]', '', cleaned)
-        cleaned = re.sub(r'\d{2}:\d{2}:\d{2}', '', cleaned)
-        cleaned = re.sub(r'[➡️❌✅ℹ️]', '', cleaned)
-        
-        cleaned = ' '.join(cleaned.split()).strip()
-        
-        return cleaned
+        """
+        Usuwa znaki niedrukowalne (C0 i C1 controls) oraz specyficzne
+        emotikony i formatowanie czasu z wiadomości odebranej z terminala.
+        """
+
+        cleaned = re.sub(r'[\x00-\x1F\x7F-\x9F\u2000-\u200B\u202F\u205F\u3000]', '', raw_text)
+
+        cleaned = re.sub(r'(\d{2}:\d{2}:\d{2}\s*)?[\s➡️❌✅ℹ️]*', '', cleaned)
+        
+        cleaned = re.sub(r'[\u2000-\u20FF\u2600-\u26FF\u2700-\u27BF]', '', cleaned)
+
+        cleaned = ' '.join(cleaned.split()).strip()
+
+        return cleaned
 class ConsoleWidget(QTextEdit):
     def __init__(self):
         super().__init__()
@@ -277,22 +282,31 @@ class TerminalModeWindow(QMainWindow):
             prefix = "ℹ️"
             
         cursor.setCharFormat(format)
-        cursor.insertText(f"{time} {prefix} {message}\n")
+        clean_message = self.strip_non_ascii_control_chars(message)
+        cursor.insertText(f"{time} {prefix} {clean_message}\n")
         
         self.terminal.moveCursor(QTextCursor.MoveOperation.End)
     
+    def strip_non_ascii_control_chars(self, text):
+        return re.sub(r'[\x00-\x1F\x7F-\x9F]', '', text)
+
+
     def handle_terminal_command(self, command):
-        """Handle commands entered in terminal"""
-        else:
-            formatted_command = self.format_command_for_arduino(command)
-            
-            if self.serial_thread and self.serial_thread.isRunning():
-                self.log_to_terminal(f"Executing: {formatted_command}", "info")
-                success = self.serial_thread.send_command(formatted_command)
-                if not success:
-                    self.log_to_terminal("Failed to send command to microcontroller", "error")
-            else: 
-                self.log_to_terminal("Not connected to microcontroller", "error")
+        """Handle commands entered in terminal"""
+        if command.lower() in ("help", "h"):
+            self.show_help()
+        elif command.lower() in ("exit", "quit", "q"):
+            self.close()
+        else:
+            formatted_command = self.format_command_for_arduino(command)
+            
+            if self.serial_thread and self.serial_thread.isRunning():
+                self.log_to_terminal(f"Executing: {formatted_command}", "info")
+                success = self.serial_thread.send_command(formatted_command)
+                if not success:
+                    self.log_to_terminal("Failed to send command to microcontroller", "error")
+            else: 
+                self.log_to_terminal("Not connected to microcontroller", "error")
     
     def format_command_for_arduino(self, command):
         """Convert user-friendly command to Arduino-compatible format"""
