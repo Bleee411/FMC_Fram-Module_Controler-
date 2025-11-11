@@ -292,9 +292,9 @@ class TerminalModeWindow(QMainWindow):
                 self.log_to_terminal(f"Executing: {formatted_command}", "info")
                 success = self.serial_thread.send_command(formatted_command)
                 if not success:
-                    self.log_to_terminal("Failed to send command to Teensy", "error")
-                else:  
-                    self.log_to_terminal("Not connected to Teensy", "error")
+                    self.log_to_terminal("Failed to send command to microcontroller", "error")
+            else: 
+                self.log_to_terminal("Not connected to microcontroller", "error")
     
     def format_command_for_arduino(self, command):
         """Convert user-friendly command to Arduino-compatible format"""
