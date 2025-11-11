@@ -11,7 +11,6 @@ It provides a simple and flexible interface (both GUI and CLI) for developers, s
 * 📖 **Read / Write / Erase** – Easily store, retrieve, and delete data from FRAM.
 * 💻 **Dual Interface** – Choose between a user-friendly GUI mode and a fast CLI (Terminal) mode.
 * 📤 **Export** – Dump the FRAM memory contents to a file.
-* 🖥️ **Cross-Platform** – The Python application runs on Linux, Windows, and macOS.
 
 ---
 
