@@ -20,7 +20,7 @@ The installation process consists of two steps: preparing the microcontroller an
 
 ### 1. Microcontroller
 
-First, you must flash the `arduino.cpp` sketch (or a similarly named file from this repository) onto your microcontroller (e.g., Teensy, Arduino) using the Arduino IDE or a similar tool.
+First, you must flash the `arduino.cpp` sketch  onto your microcontroller (e.g., Teensy, Arduino) using the Arduino IDE or a similar tool.
 
 ### 2. PC Software
 
