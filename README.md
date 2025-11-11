@@ -1,24 +1,33 @@
 # 🧩 FRAM Module Controller
 
-The **FRAM Module Controller** is a Python-based tool designed to easily manage, read, and write data to **FRAM (Ferroelectric RAM) modules**.
-It provides a simple and flexible interface for developers, students, and hardware enthusiasts who want to integrate FRAM storage into their projects.
+The **FRAM Module Controller** is a Python-based tool designed to easily manage, read, and write data on **FRAM (Ferroelectric RAM)** modules *via a connected microcontroller*.
+
+It provides a simple and flexible interface (both GUI and CLI) for developers, students, and hardware enthusiasts who want to interact with FRAM memory managed by a microcontroller (e.g., Teensy, Arduino).
 
 ---
 
 ## ✨ Features
 
-* 📖 **Read / Write Support** – easily store and retrieve data from FRAM
-* 🖥️ **Cross-Platform** – works on Linux, Windows, and macOS
-* ⚙️ **Manage your FRAM module** - manage data on your FRAM module
+* 📖 **Read / Write / Erase** – Easily store, retrieve, and delete data from FRAM.
+* 💻 **Dual Interface** – Choose between a user-friendly GUI mode and a fast CLI (Terminal) mode.
+* 📤 **Export** – Dump the FRAM memory contents to a file.
+* 🖥️ **Cross-Platform** – The Python application runs on Linux, Windows, and macOS.
 
 ---
 
 ## 🛠️ Installation
 
-Clone this repository and install required dependencies:
+The installation process consists of two steps: preparing the microcontroller and installing the PC software.
+
+### 1. Microcontroller
+
+First, you must flash the `arduino.cpp` sketch (or a similarly named file from this repository) onto your microcontroller (e.g., Teensy, Arduino) using the Arduino IDE or a similar tool.
+
+### 2. PC Software
+
+Next, clone this repository and install the required Python dependencies:
 
 ```bash
-git clone https://github.com/Bleee411/FMC_Fram-Module_Controler.git
+git clone [https://github.com/Bleee411/FMC_Fram-Module_Controler.git](https://github.com/Bleee411/FMC_Fram-Module_Controler.git)
 cd FMC_Fram-Module_Controler
 pip install -r requirements.txt
-```
