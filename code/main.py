@@ -168,18 +168,16 @@ class TerminalWidget(QTextEdit):
         super().keyPressEvent(event)
     
     def clean_command(self, raw_text):
-        if raw_text.startswith("FRAM> "):
-            raw_text = raw_text[6:]
-        
-        import re
-        cleaned = re.sub(r'[\u0000-\u001F\u007F-\u009F\u2000-\u20FF\u2600-\u26FF\u2700-\u27BF]', '', raw_text)
-        cleaned = re.sub(r'\d{2}:\d{2}:\d{2}', '', cleaned)
-        cleaned = re.sub(r'[➡️❌✅ℹ️]', '', cleaned)
-        
-        cleaned = ' '.join(cleaned.split()).strip()
-        
-        return cleaned
-
+        
+        import re
+        cleaned = raw_text 
+        cleaned = re.sub(r'[\u0000-\u001F\u007F-\u009F\u2000-\u20FF\u2600-\u26FF\u2700-\u27BF]', '', cleaned)
+        cleaned = re.sub(r'\d{2}:\d{2}:\d{2}', '', cleaned)
+        cleaned = re.sub(r'[➡️❌✅ℹ️]', '', cleaned)
+        
+        cleaned = ' '.join(cleaned.split()).strip()
+        
+        return cleaned
 class ConsoleWidget(QTextEdit):
     def __init__(self):
         super().__init__()
