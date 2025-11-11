@@ -284,27 +284,17 @@ class TerminalModeWindow(QMainWindow):
         self.terminal.moveCursor(QTextCursor.MoveOperation.End)
     
     def handle_terminal_command(self, command):
-        """Handle commands entered in terminal"""
-        
-        if not command or command.isspace():
-            return
-            
-        command = command.strip()
-        
-        if command.lower() == "help":
-            self.show_help()
-        elif command.lower() in ["exit", "quit"]:
-            self.close()
-        else:
-            formatted_command = self.format_command_for_arduino(command)
-            
-            if self.serial_thread and self.serial_thread.isRunning():
-                self.log_to_terminal(f"Executing: {formatted_command}", "info")
-                success = self.serial_thread.send_command(formatted_command)
-                if not success:
-                    self.log_to_terminal("Failed to send command to Teensy", "error")
-            else:
-                self.log_to_terminal("Not connected to Teensy", "error")
+        """Handle commands entered in terminal"""
+        else:
+            formatted_command = self.format_command_for_arduino(command)
+            
+            if self.serial_thread and self.serial_thread.isRunning():
+                self.log_to_terminal(f"Executing: {formatted_command}", "info")
+                success = self.serial_thread.send_command(formatted_command)
+                if not success:
+                    self.log_to_terminal("Failed to send command to Teensy", "error")
+                else:  
+                    self.log_to_terminal("Not connected to Teensy", "error")
     
     def format_command_for_arduino(self, command):
         """Convert user-friendly command to Arduino-compatible format"""
