@@ -27,6 +27,6 @@ First, you must flash the `arduino.cpp` sketch  onto your microcontroller (e.g.,
 Next, clone this repository and install the required Python dependencies:
 
 ```bash
-git clone [https://github.com/Bleee411/FMC_Fram-Module_Controler.git](https://github.com/Bleee411/FMC_Fram-Module_Controler.git)
+git clone https://github.com/Bleee411/FMC_Fram-Module_Controler.git
 cd FMC_Fram-Module_Controler
 pip install -r requirements.txt
